@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IAC Signage Designer</title>
+    <title>IAC Signage Designer v2</title>
     <style>
         * {
             margin: 0;
@@ -19,7 +19,7 @@
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
         }
 
@@ -42,7 +42,7 @@
 
         .main-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 380px 1fr;
             gap: 40px;
             margin-bottom: 40px;
         }
@@ -52,32 +52,34 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .panel h2 {
-            font-size: 20px;
+            font-size: 18px;
             margin-bottom: 20px;
             border-bottom: 2px solid #5C7C6A;
             padding-bottom: 10px;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .form-group label {
             display: block;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
             color: #1A1A1A;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 10px;
-            font-size: 14px;
+            padding: 8px;
+            font-size: 13px;
             border: 2px solid #C8BFB0;
             border-radius: 4px;
             color: #1A1A1A;
@@ -92,24 +94,25 @@
         }
 
         .spec-info {
-            font-size: 12px;
+            font-size: 11px;
             color: #4A4A4A;
-            margin-top: 8px;
+            margin-top: 6px;
+            line-height: 1.4;
         }
 
         .colour-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
+            gap: 6px;
             margin-top: 8px;
         }
 
         .colour-btn {
-            padding: 10px;
+            padding: 8px;
             border: 2px solid #C8BFB0;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
             color: white;
             transition: all 0.2s;
@@ -128,15 +131,15 @@
         .button-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 30px;
+            gap: 10px;
+            margin-top: 20px;
         }
 
         .btn {
-            padding: 12px 20px;
+            padding: 10px 16px;
             border: none;
             border-radius: 4px;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
@@ -161,71 +164,167 @@
             background-color: #B8AFAA;
         }
 
-        .preview-panel {
+        /* PREVIEW SECTION */
+        .preview-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .preview-section {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .preview-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #1A1A1A;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Canvas for sign preview */
+        .sign-canvas {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .sign-wrapper {
+            perspective: 1000px;
+        }
+
+        .sign {
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Sign sections */
+        .sign-top {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80px;
+        }
+
+        .sign-middle {
+            padding: 20px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 500px;
-            border-radius: 8px;
+            flex: 1;
             text-align: center;
-            padding: 40px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
         }
 
-        .preview-icon {
-            font-size: 120px;
-            margin-bottom: 30px;
+        .sign-bottom {
+            padding: 12px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .sign-icon {
+            font-size: 60px;
+            margin-bottom: 12px;
             line-height: 1;
         }
 
-        .preview-primary {
-            margin-bottom: 15px;
-            line-height: 1.2;
+        .sign-primary {
             font-weight: bold;
+            font-size: 32px;
+            margin-bottom: 8px;
+            line-height: 1.2;
+            color: #1A1A1A;
         }
 
-        .preview-secondary {
-            margin-bottom: 20px;
-            opacity: 0.9;
+        .sign-secondary {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #4A4A4A;
             line-height: 1.2;
         }
 
-        .preview-tertiary {
-            opacity: 0.7;
-            margin-bottom: 30px;
-            line-height: 1.2;
-        }
-
-        .preview-specs {
+        .sign-tertiary {
             font-size: 12px;
-            opacity: 0.6;
-            margin-top: 40px;
-            border-top: 1px solid currentColor;
-            padding-top: 20px;
+            color: #4A4A4A;
+            line-height: 1.2;
         }
 
-        .preview-specs p {
-            margin: 5px 0;
+        .colour-band {
+            height: 16px;
+            width: 100%;
+        }
+
+        .braille-indicator {
+            font-size: 10px;
+            color: #888;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        /* Material colors */
+        .material-concrete {
+            background: linear-gradient(135deg, #a8a8a8 0%, #808080 50%, #6b6b6b 100%);
+            background-color: #8a8a8a;
+        }
+
+        .material-steel {
+            background: linear-gradient(135deg, #4a4a4a 0%, #2a2a2a 50%, #1a1a1a 100%);
+            background-color: #3a3a3a;
+        }
+
+        .material-wood {
+            background: linear-gradient(135deg, #c9a876 0%, #a8825f 50%, #8b6f47 100%);
+            background-color: #a8825f;
+        }
+
+        .material-concrete .sign-primary,
+        .material-concrete .sign-secondary,
+        .material-concrete .sign-tertiary {
+            color: #1A1A1A;
+        }
+
+        .material-steel .sign-primary,
+        .material-steel .sign-secondary,
+        .material-steel .sign-tertiary {
+            color: #f2eae0;
+        }
+
+        .material-wood .sign-primary,
+        .material-wood .sign-secondary,
+        .material-wood .sign-tertiary {
+            color: #1A1A1A;
         }
 
         .info-box {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-            font-size: 13px;
+            background-color: #f9f7f4;
+            padding: 16px;
+            border-radius: 4px;
+            border-left: 4px solid #5C7C6A;
+            font-size: 12px;
             color: #4A4A4A;
+            line-height: 1.6;
         }
 
         .info-box h3 {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             color: #1A1A1A;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .info-box p {
-            margin: 8px 0;
+            margin: 6px 0;
         }
 
         .footer {
@@ -238,9 +337,12 @@
             color: #4A4A4A;
         }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 1200px) {
             .main-grid {
                 grid-template-columns: 1fr;
+            }
+            .panel {
+                max-height: none;
             }
         }
     </style>
@@ -248,22 +350,22 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>IAC Signage Designer</h1>
-            <p>Design signs with locked standards. All 12 typologies. One system.</p>
+            <h1>IAC Signage Designer v2</h1>
+            <p>Design with locked standards. Realistic material preview. All 12 typologies.</p>
         </div>
 
         <div class="main-grid">
-            <!-- LEFT PANEL -->
+            <!-- LEFT PANEL - CONTROLS -->
             <div class="panel">
                 <h2>Design Controls</h2>
 
                 <div class="form-group">
-                    <label>Typology (Locked Sizes)</label>
+                    <label>Typology</label>
                     <select id="typology" onchange="updateTypology()">
-                        <option value="T-01">T-01 - Primary Directional Sign</option>
-                        <option value="T-02">T-02 - Secondary Directional Sign</option>
+                        <option value="T-01">T-01 - Primary Directional</option>
+                        <option value="T-02">T-02 - Secondary Directional</option>
                         <option value="T-03">T-03 - Block/Building ID</option>
-                        <option value="T-04">T-04 - Room Identification</option>
+                        <option value="T-04" selected>T-04 - Room ID</option>
                         <option value="T-05">T-05 - Road/Path Name</option>
                         <option value="T-06">T-06 - Pond/Island Name</option>
                         <option value="T-07">T-07 - Plant/Tree Label</option>
@@ -277,18 +379,18 @@
                 </div>
 
                 <div class="form-group">
-                    <label id="primary-label">Primary Text (40mm)</label>
-                    <input type="text" id="primaryText" value="Admin Block" onchange="updatePreview()">
+                    <label id="primary-label">Primary Text</label>
+                    <input type="text" id="primaryText" value="Quiet Room" oninput="updatePreview()">
                 </div>
 
                 <div class="form-group">
-                    <label id="secondary-label">Secondary Text (20mm)</label>
-                    <input type="text" id="secondaryText" value="120m / 2 min" onchange="updatePreview()">
+                    <label id="secondary-label">Secondary Text</label>
+                    <input type="text" id="secondaryText" value="Room 01" oninput="updatePreview()">
                 </div>
 
                 <div class="form-group">
-                    <label id="tertiary-label">Tertiary Text (10mm)</label>
-                    <input type="text" id="tertiaryText" value="Zone A" onchange="updatePreview()">
+                    <label id="tertiary-label">Tertiary Text</label>
+                    <input type="text" id="tertiaryText" value="Zone A" oninput="updatePreview()">
                 </div>
 
                 <div class="form-group">
@@ -302,83 +404,109 @@
                         <option value="→">→ Arrow Right</option>
                         <option value="↑">↑ Arrow Up</option>
                         <option value="←">← Arrow Left</option>
-                        <option value="🔇">🔇 Mute</option>
+                        <option value="🔇" selected>🔇 Mute</option>
                         <option value="🌳">🌳 Tree</option>
                         <option value="⚠️">⚠️ Warning</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label>Zone Colour</label>
-                    <div class="colour-grid">
-                        <button class="colour-btn active" style="background-color: #7BA887;" onclick="setColour('#7BA887', this)">Sage Green</button>
-                        <button class="colour-btn" style="background-color: #A878A8;" onclick="setColour('#A878A8', this)">Muted Purple</button>
-                        <button class="colour-btn" style="background-color: #D4815D;" onclick="setColour('#D4815D', this)">Terracotta</button>
-                        <button class="colour-btn" style="background-color: #F2EFE9; color: #1A1A1A;" onclick="setColour('#F2EFE9', this)">Off-White</button>
-                        <button class="colour-btn" style="background-color: #1A1A1A;" onclick="setColour('#1A1A1A', this)">Dark</button>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Material Finish</label>
+                    <label>Material</label>
                     <select id="material" onchange="updatePreview()">
-                        <option>Matte Concrete</option>
-                        <option>Corten Steel</option>
-                        <option>Stainless Steel</option>
-                        <option>Painted Steel</option>
-                        <option>Bamboo Plywood</option>
+                        <option value="concrete">Concrete + Steel</option>
+                        <option value="steel">Stainless Steel</option>
+                        <option value="wood">Bamboo Plywood</option>
                     </select>
                 </div>
 
+                <div class="form-group">
+                    <label>Zone Colour</label>
+                    <div class="colour-grid">
+                        <button class="colour-btn active" style="background-color: #7BA887;" onclick="setColour('#7BA887', this)">Green</button>
+                        <button class="colour-btn" style="background-color: #A878A8;" onclick="setColour('#A878A8', this)">Purple</button>
+                        <button class="colour-btn" style="background-color: #D4815D;" onclick="setColour('#D4815D', this)">Terra</button>
+                        <button class="colour-btn" style="background-color: #F2EFE9; color: #1A1A1A;" onclick="setColour('#F2EFE9', this)">Off-White</button>
+                    </div>
+                </div>
+
                 <div class="button-group">
-                    <button class="btn btn-primary" onclick="exportSpecs()">📥 Export Specs</button>
+                    <button class="btn btn-primary" onclick="exportSpecs()">📥 Export</button>
                     <button class="btn btn-secondary" onclick="resetForm()">🔄 Reset</button>
+                </div>
+
+                <div class="info-box" style="margin-top: 20px;">
+                    <h3>Standards (Locked)</h3>
+                    <p><strong>Ratios:</strong> P:S:T = 2:1:0.5</p>
+                    <p><strong>Icon:</strong> 1.5× primary text</p>
+                    <p><strong>Contrast:</strong> 4.5:1 (WCAG AA)</p>
+                    <p><strong>Braille:</strong> 900–1200mm AFF</p>
                 </div>
             </div>
 
             <!-- RIGHT PANEL - PREVIEW -->
-            <div>
-                <div class="preview-panel" id="preview" style="background-color: #7BA887; color: white;">
-                    <div class="preview-icon" id="preview-icon">👥</div>
-                    <div class="preview-primary" id="preview-primary" style="font-size: 40px;">Admin Block</div>
-                    <div class="preview-secondary" id="preview-secondary" style="font-size: 20px;">120m / 2 min</div>
-                    <div class="preview-tertiary" id="preview-tertiary" style="font-size: 10px;">Zone A</div>
-                    <div class="preview-specs">
-                        <p>Material: <span id="preview-material">Concrete + Steel</span></p>
-                        <p>Finish: <span id="preview-finish">Matte Concrete</span></p>
-                        <p>Viewing Distance: <span id="preview-distance">5m</span></p>
+            <div class="preview-container">
+                <div class="preview-section">
+                    <div class="preview-title" id="preview-title">T-04 Room Identification Sign</div>
+                    <div class="sign-canvas">
+                        <div class="sign-wrapper">
+                            <div class="sign material-concrete" id="sign" style="width: 280px;">
+                                <!-- Colour band -->
+                                <div class="colour-band" id="colour-band" style="background-color: #7BA887;"></div>
+
+                                <!-- Top section with icon -->
+                                <div class="sign-top">
+                                    <div class="sign-icon" id="sign-icon">🔇</div>
+                                </div>
+
+                                <!-- Middle section with text -->
+                                <div class="sign-middle">
+                                    <div class="sign-primary" id="sign-primary">Quiet Room</div>
+                                    <div class="sign-secondary" id="sign-secondary">Room 01</div>
+                                    <div class="sign-tertiary" id="sign-tertiary">Zone A</div>
+                                </div>
+
+                                <!-- Bottom section - Braille indicator -->
+                                <div class="sign-bottom">
+                                    <div class="braille-indicator">⠠⠠⠠ Braille (900-1200mm AFF)</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="info-box">
-                    <h3>Size Standards (Locked)</h3>
-                    <p>Primary : Secondary : Tertiary = 2 : 1 : 0.5</p>
-                    <p>Icon = 1.5 × Primary Text</p>
-                    <p>✓ Contrast ratio 4.5:1 (WCAG AA)</p>
-                    <p>✓ Matte finishes only</p>
-                    <p>✓ Braille at 900–1200mm AFF</p>
+                <div class="preview-section">
+                    <div class="preview-title">Technical Specifications</div>
+                    <div class="info-box">
+                        <p><strong>Viewing Distance:</strong> <span id="tech-view-dist">0.5m</span></p>
+                        <p><strong>Primary Text:</strong> <span id="tech-primary">12mm</span></p>
+                        <p><strong>Secondary Text:</strong> <span id="tech-secondary">6mm</span></p>
+                        <p><strong>Icon Height:</strong> <span id="tech-icon">18mm</span></p>
+                        <p><strong>Material:</strong> <span id="tech-material">Concrete + Steel</span></p>
+                        <p><strong>Finish:</strong> Matte (no gloss)</p>
+                        <p><strong>Braille:</strong> IS 9954 Grade 1, routed 0.5mm deep</p>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="footer">
-            <strong>IAC Signage Designer v1.0</strong> — All sizes, hierarchy ratios, and standards are locked to prevent inconsistency. Export specs and hand off to fabrication. Sub-variations can be added later as project progresses.
+            <strong>IAC Signage Designer v2.0</strong> — Material colors shown. All sizes locked to standards. Export fabrication specs. Built for the IAC Campus project.
         </div>
     </div>
 
     <script>
         const typologies = {
-            'T-01': { name: 'Primary Directional', viewDist: 5.0, primary: 40, secondary: 20, material: 'Concrete + Steel' },
-            'T-02': { name: 'Secondary Directional', viewDist: 3.0, primary: 25, secondary: 12, material: 'Concrete + Steel' },
+            'T-01': { name: 'Primary Directional Sign', viewDist: 5.0, primary: 40, secondary: 20, material: 'Concrete + Steel' },
+            'T-02': { name: 'Secondary Directional Sign', viewDist: 3.0, primary: 25, secondary: 12, material: 'Concrete + Steel' },
             'T-03': { name: 'Block/Building ID', viewDist: 2.0, primary: 18, secondary: 9, material: 'Concrete + Steel' },
-            'T-04': { name: 'Room ID', viewDist: 0.5, primary: 12, secondary: 6, material: 'Bamboo Plywood + Steel' },
+            'T-04': { name: 'Room Identification', viewDist: 0.5, primary: 12, secondary: 6, material: 'Bamboo Plywood + Steel' },
             'T-05': { name: 'Road/Path Name', viewDist: 2.0, primary: 18, secondary: 9, material: 'Concrete + Steel' },
             'T-06': { name: 'Pond/Island Name', viewDist: 2.0, primary: 18, secondary: 9, material: 'Concrete + Steel' },
             'T-07': { name: 'Plant/Tree Label', viewDist: 1.0, primary: 8, secondary: 4, material: 'Concrete + Steel' },
             'T-08': { name: 'Restricted Zone', viewDist: 3.0, primary: 25, secondary: 12, material: 'Concrete + Steel' },
             'T-09': { name: 'Danger Zone', viewDist: 3.0, primary: 25, secondary: 12, material: 'Concrete + Steel' },
             'T-10': { name: 'Speed Limit', viewDist: 4.0, primary: 32, secondary: 16, material: 'Concrete + Steel' },
-            'T-11': { name: 'Lamp Post', viewDist: 2.5, primary: 20, secondary: 10, material: 'Concrete + Steel' },
+            'T-11': { name: 'Lamp Post Sign', viewDist: 2.5, primary: 20, secondary: 10, material: 'Concrete + Steel' },
             'T-12': { name: 'Storytelling Cue', viewDist: 3.0, primary: 25, secondary: 12, material: 'Concrete + Steel' }
         };
 
@@ -388,14 +516,19 @@
             const typology = document.getElementById('typology').value;
             const spec = typologies[typology];
             const tertiary = Math.round(spec.secondary / 2);
+            const icon = Math.round(spec.primary * 1.5);
 
-            document.getElementById('spec-info').textContent = `View distance: ${spec.viewDist}m | Primary: ${spec.primary}mm | Secondary: ${spec.secondary}mm | Icon: ${Math.round(spec.primary * 1.5)}mm`;
+            document.getElementById('spec-info').textContent = `View: ${spec.viewDist}m | P: ${spec.primary}mm | S: ${spec.secondary}mm | Icon: ${icon}mm`;
             document.getElementById('primary-label').textContent = `Primary Text (${spec.primary}mm)`;
             document.getElementById('secondary-label').textContent = `Secondary Text (${spec.secondary}mm)`;
             document.getElementById('tertiary-label').textContent = `Tertiary Text (${tertiary}mm)`;
+            document.getElementById('preview-title').textContent = `${typology} ${spec.name}`;
 
-            document.getElementById('preview-material').textContent = spec.material;
-            document.getElementById('preview-distance').textContent = `${spec.viewDist}m`;
+            document.getElementById('tech-view-dist').textContent = `${spec.viewDist}m`;
+            document.getElementById('tech-primary').textContent = `${spec.primary}mm`;
+            document.getElementById('tech-secondary').textContent = `${spec.secondary}mm`;
+            document.getElementById('tech-icon').textContent = `${icon}mm`;
+            document.getElementById('tech-material').textContent = spec.material;
 
             updatePreview();
         }
@@ -419,32 +552,33 @@
             const iconEmoji = document.getElementById('icon').value;
             const material = document.getElementById('material').value;
 
-            const preview = document.getElementById('preview');
-            preview.style.backgroundColor = currentColour;
-            preview.style.color = currentColour === '#F2EFE9' ? '#1A1A1A' : 'white';
+            // Update sign
+            const sign = document.getElementById('sign');
+            sign.className = `sign material-${material}`;
+            sign.style.width = Math.max(280, spec.primary * 12) + 'px';
 
-            document.getElementById('preview-icon').textContent = iconEmoji;
-            document.getElementById('preview-icon').style.fontSize = `${icon * 2}px`;
+            document.getElementById('colour-band').style.backgroundColor = currentColour;
+            document.getElementById('sign-icon').textContent = iconEmoji;
+            document.getElementById('sign-icon').style.fontSize = (icon * 0.8) + 'px';
 
-            document.getElementById('preview-primary').textContent = primary;
-            document.getElementById('preview-primary').style.fontSize = `${spec.primary}px`;
+            document.getElementById('sign-primary').textContent = primary;
+            document.getElementById('sign-primary').style.fontSize = (spec.primary * 0.8) + 'px';
 
-            document.getElementById('preview-secondary').textContent = secondary;
-            document.getElementById('preview-secondary').style.fontSize = `${spec.secondary}px`;
+            document.getElementById('sign-secondary').textContent = secondary;
+            document.getElementById('sign-secondary').style.fontSize = (spec.secondary * 0.8) + 'px';
 
-            document.getElementById('preview-tertiary').textContent = tertText;
-            document.getElementById('preview-tertiary').style.fontSize = `${tertiary}px`;
-
-            document.getElementById('preview-finish').textContent = material;
+            document.getElementById('sign-tertiary').textContent = tertText;
+            document.getElementById('sign-tertiary').style.fontSize = (tertiary * 0.8) + 'px';
         }
 
         function resetForm() {
-            document.getElementById('primaryText').value = 'Admin Block';
-            document.getElementById('secondaryText').value = '120m / 2 min';
+            document.getElementById('typology').value = 'T-04';
+            document.getElementById('primaryText').value = 'Quiet Room';
+            document.getElementById('secondaryText').value = 'Room 01';
             document.getElementById('tertiaryText').value = 'Zone A';
-            document.getElementById('icon').value = '👥';
-            document.getElementById('material').value = 'Matte Concrete';
-            updatePreview();
+            document.getElementById('icon').value = '🔇';
+            document.getElementById('material').value = 'concrete';
+            updateTypology();
         }
 
         function exportSpecs() {
@@ -454,6 +588,7 @@
             const secondary = document.getElementById('secondaryText').value;
             const tertiary = document.getElementById('tertiaryText').value;
             const material = document.getElementById('material').value;
+            const tertSize = Math.round(spec.secondary / 2);
 
             const specs = `IAC SIGNAGE FABRICATION SPECIFICATIONS
 =======================================
@@ -468,14 +603,13 @@ Secondary Text: "${secondary}"
 Tertiary Text: "${tertiary}"
 Zone Colour: ${currentColour}
 Material: ${spec.material}
-Finish: ${material}
 
-SIZING STANDARDS
-================
+SIZING STANDARDS (LOCKED)
+=========================
 Viewing Distance: ${spec.viewDist}m
 Primary Text Height: ${spec.primary}mm
 Secondary Text Height: ${spec.secondary}mm
-Tertiary Text Height: ${Math.round(spec.secondary / 2)}mm
+Tertiary Text Height: ${tertSize}mm
 Icon Height: ${Math.round(spec.primary * 1.5)}mm
 
 HIERARCHY RATIOS (FIXED)
@@ -485,9 +619,10 @@ Icon Height = 1.5 × Primary Text
 
 MATERIAL SPECIFICATIONS
 ========================
-Base/Structure: Concrete (exposed aggregate, 20-40mm stones)
-Secondary: Stainless Steel or Corten Steel (matte finish)
-Text Method: Routed into concrete (minimum 2mm depth)
+Base/Structure: Concrete (exposed aggregate) OR Stainless Steel OR Bamboo Plywood
+Secondary: Stainless Steel frame (matte finish)
+Text Method: Routed into material (minimum 2mm depth)
+Colour Band: Anodised aluminium or enamel paint
 Finish: Matte only - NO gloss, NO reflective surfaces
 
 BRAILLE & ACCESSIBILITY
@@ -496,20 +631,22 @@ Braille Required: Yes (IS 9954 Grade 1)
 Braille Position: 900-1200mm AFF
 Braille Depth: Minimum 0.5mm tactile depth
 Contrast Ratio: Minimum 4.5:1 (WCAG AA)
+Recessed Text: Yes (minimum 2mm depth for tactile feedback)
 
 QUALITY CONTROL CHECKLIST
 ==========================
 ☐ Legibility verified at ${spec.viewDist}m distance
 ☐ Contrast ratio tested (minimum 4.5:1)
 ☐ Text sizes match specifications exactly
-☐ Icon monochromatic and consistent
-☐ White space margins maintained (minimum 20mm)
+☐ Icon monochromatic
+☐ White space margins maintained (20mm minimum)
 ☐ Braille tactility verified
 ☐ Material finish is matte (no gloss)
 ☐ All hardware stainless steel, countersunk
 
 ---
-Design created with IAC Signage Designer v1.0`;
+Design created with IAC Signage Designer v2.0
+For questions, refer to IAC Signage Design Standards`;
 
             const element = document.createElement('a');
             element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(specs));
